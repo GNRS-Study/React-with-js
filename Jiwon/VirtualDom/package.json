@@ -1,0 +1,14 @@
+{
+  "name": "virtualdom",
+  "version": "1.0.0",
+  "description": "Virtual Dom",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server"
+  },
+  "author": "jiwon",
+  "license": "ISC",
+  "dependencies": {
+    "lite-server": "^2.6.1"
+  }
+}

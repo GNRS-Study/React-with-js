@@ -1,5 +1,8 @@
 react dive
 
+notion : https://ripe-cuticle-47c.notion.site/JS-b8df735f562045fbb4c86436d0dca200
+
+
 node_modules - 관련 패키지들을 관리하는 폴더
 
 public 

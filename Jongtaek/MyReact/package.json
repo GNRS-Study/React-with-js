@@ -1,0 +1,19 @@
+{
+  "name": "my-react",
+  "version": "1.0.0",
+  "description": "Virtual Dom",
+  "main": "src/index.js",
+  "scripts": {
+    "babel": "babel src --out-dir dist",
+    "start": "lite-server "
+  },
+  "author": "jiwon",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.10",
+    "@babel/plugin-transform-react-jsx": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "lite-server": "^2.6.1"
+  }
+}

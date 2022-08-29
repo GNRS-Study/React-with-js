@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 export default function App() {
+  const [count, setCount] = useState(1);
   return (
-    <ul>
-      <li>item 1</li>
-      <li>item 2</li>
-    </ul>
+    <div>
+      count {count}
+    </div>
   )
 }

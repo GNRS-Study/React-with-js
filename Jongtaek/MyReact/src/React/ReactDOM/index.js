@@ -7,10 +7,10 @@ function changed(node1, node2) {
 }
 
 export function createElement(node) {
+  if (node == null) return;
   if (typeof node === "string") {
     return document.createTextNode(node);
   }
-
   const $el = document.createElement(node.type);
 
   Object.entries(node.props || {})
@@ -20,9 +20,11 @@ export function createElement(node) {
   console.log("> node.children : ", node.children);
 
   try {
-    node.children
-      ?.map(createElement)
-      .forEach((child) => $el.appendChild(child));
+    node.children?.map(createElement).forEach((child) => {
+      if (typeof child === "string") {
+        $el.insertAdjacentHTML("beforeend", str);
+      } else $el.appendChild(child);
+    });
   } catch (e) {
     console.log(node);
     console.error(e);

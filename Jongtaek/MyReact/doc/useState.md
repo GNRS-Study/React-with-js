@@ -14,5 +14,8 @@
    - React.createElement 에서 FC 를 실행해버리면 state가 변하지 않는 문제가 있었음 => updateElement 에 추가
    - onClick 을 그냥 넣으면 string type으로 변환되어서 들어가서 실행되지 않음 => addEventListener 사용
    - state 를 변경하고 다시 그려줘야 함 -> render 메소드 추가 - 좀 이상하긴 하지만 일단 돌아가는 코드를 만들기 위해...
-   - TODO -> useState를 여러 컴포넌트에서 사용할 경우에 대한 문제 해결이 필요함
 
+6. useState 를 여러 번 사용하는 경우에 대한 처리
+   - state 를 리스트로 관리함
+   - input 타입의 경우 onChange 정의 필요
+     - render 할 때마다 포커스를 잃는 문제가 있음

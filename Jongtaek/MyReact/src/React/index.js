@@ -4,24 +4,32 @@ function createElement(type, props, ...children) {
 }
 
 let render;
-let value;
-let isInitialized = false;
+let hooks = [];
+let idx = 0;
 
 export function setRenderFn(renderFn) {
-  render = renderFn;
+  render = () => {
+    idx = 0;
+    renderFn();
+  };
 }
 
 export function useState(initialValue) {
-  if (!isInitialized) {
-    value = initialValue;
-    isInitialized = true;
+  const index = idx;
+  if (hooks.length < index + 1) {
+    hooks[index] = initialValue;
   }
 
   const setValue = (newValue) => {
-    console.log("setValue", newValue);
-    value = newValue;
+    console.log("setValue", newValue, index);
+    hooks[index] = newValue;
     render();
   };
+
+  const value = hooks[index];
+  idx++;
+  if (idx > hooks.length) idx %= hooks.length;
+
   return [value, setValue];
 }
 

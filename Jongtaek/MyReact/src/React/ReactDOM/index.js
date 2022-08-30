@@ -11,6 +11,8 @@ function changed(node1, node2) {
 function setAttribute($el, [attr, value]) {
   if (attr == "onClick") {
     $el.addEventListener("click", value);
+  } else if (attr === "onChange") {
+    $el.addEventListener("input", value);
   } else {
     $el.setAttribute(attr, value);
   }

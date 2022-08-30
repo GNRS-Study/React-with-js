@@ -8,4 +8,6 @@
 - virtualDom 구현
 - webpack, babel 세팅
 - useState, useEffect 구현
-- 
+- 웹 컴포넌트 구현
+- 상태관리 시스템 구현
+- react 라이프사이클

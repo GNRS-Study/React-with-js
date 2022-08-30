@@ -1,3 +1,5 @@
+import { setRenderFn } from "..";
+
 function changed(node1, node2) {
   return (
     typeof node1 !== typeof node2 ||
@@ -6,16 +8,25 @@ function changed(node1, node2) {
   );
 }
 
+function setAttribute($el, [attr, value]) {
+  if (attr == "onClick") {
+    $el.addEventListener("click", value);
+  } else {
+    $el.setAttribute(attr, value);
+  }
+}
+
 export function createElement(node) {
   if (node == null) return;
-  if (typeof node === "string") {
+
+  if (typeof node === "string" || typeof node === "number") {
     return document.createTextNode(node);
   }
   const $el = document.createElement(node.type);
 
   Object.entries(node.props || {})
     .filter(([attr, value]) => value)
-    .forEach(([attr, value]) => $el.setAttribute(attr, value));
+    .forEach(([attr, value]) => setAttribute($el, [attr, value]));
 
   console.log("> node.children : ", node.children);
 
@@ -34,6 +45,9 @@ export function createElement(node) {
 }
 
 export function updateElement($parent, newNode, oldNode, index = 0) {
+  if (newNode && typeof newNode.type === "function") {
+    newNode = newNode.type.apply(null, [newNode.props, ...newNode.children]);
+  }
   if (!oldNode) {
     $parent.appendChild(createElement(newNode));
   } else if (!newNode) {
@@ -61,6 +75,7 @@ export function createRoot($el) {
     updateElement($el, newNode, oldNode);
     oldNode = newNode;
   }
+  setRenderFn(() => render(oldNode));
   return {
     render,
   };

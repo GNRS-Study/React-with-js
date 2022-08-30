@@ -4,7 +4,12 @@ export default function App() {
   const [count, setCount] = useState(1);
   return (
     <div>
-      count {count}
+      <button onClick={() => {
+        setCount(count + 1);
+        }}>+</button>
+      <div>
+        count {count}
+      </div>
     </div>
   )
 }

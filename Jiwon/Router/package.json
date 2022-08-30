@@ -1,0 +1,14 @@
+{
+  "name": "router",
+  "version": "1.0.0",
+  "description": "Router",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "jiwon",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

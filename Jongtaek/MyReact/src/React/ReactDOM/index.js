@@ -30,8 +30,6 @@ export function createElement(node) {
     .filter(([attr, value]) => value)
     .forEach(([attr, value]) => setAttribute($el, [attr, value]));
 
-  console.log("> node.children : ", node.children);
-
   try {
     node.children?.map(createElement).forEach((child) => {
       if (typeof child === "string") {
@@ -47,9 +45,6 @@ export function createElement(node) {
 }
 
 export function updateElement($parent, newNode, oldNode, index = 0) {
-  if (newNode && typeof newNode.type === "function") {
-    newNode = newNode.type.apply(null, [newNode.props, ...newNode.children]);
-  }
   if (!oldNode) {
     $parent.appendChild(createElement(newNode));
   } else if (!newNode) {
@@ -69,17 +64,34 @@ export function updateElement($parent, newNode, oldNode, index = 0) {
     }
   }
 }
+function parseNode(node) {
+  if (node == null) return node;
+  if (typeof node === "string" || typeof node === "number") return `${node}`;
+  let newNode = { ...node };
+  if (newNode && typeof newNode.type === "function") {
+    newNode = newNode.type.apply(null, [newNode.props, ...newNode.children]);
+  }
+  newNode.children = newNode.children?.map(parseNode);
+
+  return newNode;
+}
 
 export function createRoot($el) {
-  let oldNode = null;
-  function render(newNode) {
-    console.log(newNode);
-    updateElement($el, newNode, oldNode);
-    oldNode = newNode;
+  let rootNode = null;
+  let prevNode = null;
+  function renderRoot(root) {
+    const parsedNode = parseNode(root);
+    updateElement($el, parsedNode, null);
+    rootNode = root;
+    prevNode = parsedNode;
   }
-  setRenderFn(() => render(oldNode));
+  setRenderFn(() => {
+    const parsedNode = parseNode(rootNode);
+    updateElement($el, parsedNode, prevNode);
+    prevNode = parsedNode;
+  });
   return {
-    render,
+    render: renderRoot,
   };
 }
 

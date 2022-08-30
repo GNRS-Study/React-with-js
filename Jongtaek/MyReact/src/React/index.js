@@ -1,5 +1,4 @@
 function createElement(type, props, ...children) {
-  console.log(type);
   return { type, props, children: children.flat() };
 }
 

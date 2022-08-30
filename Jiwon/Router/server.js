@@ -24,12 +24,10 @@ app.use("/", express.static(__dirname));
 // http://localhost:8080/static/js/index.js
 // http://localhost:8080/static/css/index.css
 
-
 // get요청이 오면 index.html 파일을 읽고 내용을 클라이언트로 전송
 app.get("/*", (req, res) => {
 	res.sendFile(path.resolve("index.html"));
 });
-
 
 // port 생성 서버 실행
 app.listen(process.env.PORT || 3000, () => console.log("Server running ...."));

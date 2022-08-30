@@ -5,10 +5,10 @@
 
 
 SPA에서는 전통적인 링크 방식과 다르게 경로가 변경되더라도 새로 페이지를 불러오지 않음.  
-(페이지를 이동할 때 anchor 태그를 활용해 새로운 html을 불러오는 게 아님)
+페이지를 이동할 때 anchor 태그를 활용해 새로운 html을 불러오는 게 아님.
 
 대신 초기 어플리케이션을 로드할 때 모든 웹사이트 콘텐츠를 로드하고, URL 경로에 따라 올바른 콘텐츠를 보여줌.  
-(index.html 하위의 DOM을 갈아 끼우면서 다른 페이지를 보여주는 방식)
+index.html 하위의 DOM을 갈아 끼우면서 다른 페이지를 보여주는 방식.
 
 SPA 라우팅을 구현하기 위해서는 새로운 HTML을 불러오지 않으면서 앞으로 가기, 뒤로 가기, 링크를 통한 경로 이동을 직접 처리해줘야 함.
 
@@ -17,9 +17,9 @@ SPA 라우팅을 구현하기 위해서는 새로운 HTML을 불러오지 않으
 
 ## SPA 라우팅을 구현하는 방법
 1. history (Browser History)를 사용한 방법.
-    - history.pushState API를 활용하여 페이지를 다시 로드하지 않고 URL을 탐색 할 수 있다.
+    - history.pushState API를 활용하여 페이지를 다시 로드하지 않고 URL을 탐색 가능.
 2. hash (Hash History)를 사용한 방법.
-    - url 해쉬를 사용하여 전체 url을 시뮬레이트하게되며, url이 변경될 때 페이지가 다시 로드되지 않는다.
+    - url 해쉬를 사용하여 전체 url을 시뮬레이트하게되며, url이 변경될 때 페이지가 다시 로드되지 않음.
     - 보통 url에 #이 붙는다.
 
 
@@ -30,7 +30,7 @@ SPA 라우팅을 구현하기 위해서는 새로운 HTML을 불러오지 않으
 - 이 방법은 서버 측 지원이 일부 필요. ex) [http://domain.com/site/another-path](http://domain.com/site/another-path) 와 같이 존재하지 않는 경로로 접속할 경우 오류를 출력. 이런 문제를 해결하고 대체할 url은 서버에서 지정해야 함.
 
 ```javascript
-// history.pushState를 통하여 새 데이터 전달을 위한 상태, 제목, url을 지정할 수 있다.
+// history.pushState를 통하여 새 데이터 전달을 위한 상태, 제목, url을 지정.
 window.history.pushState({ data: 'some data' }, 'Some history entry title', '/some-path')
 
 window.onpopstate = () => {

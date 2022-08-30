@@ -19,3 +19,7 @@
    - state 를 리스트로 관리함
    - input 타입의 경우 onChange 정의 필요
      - render 할 때마다 포커스를 잃는 문제가 있음
+
+7. render할 때마다 포커스를 잃는 문제 해결
+   - render 함수 수정 -> renderRoot 와 render 분리
+   - onClick 등이 수정되어도 동작하지 않는 문제 -> props 업데이트 추가

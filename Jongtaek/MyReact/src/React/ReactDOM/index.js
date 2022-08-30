@@ -1,5 +1,7 @@
 import { setRenderFn } from "..";
 
+const eventListenerMap = new Map();
+
 function changed(node1, node2) {
   return (
     typeof node1 !== typeof node2 ||
@@ -8,14 +10,31 @@ function changed(node1, node2) {
   );
 }
 
+function setEventListener($el, eventType, eventListener) {
+  const elementEventListenerMap = eventListenerMap.get($el) || new Map();
+  const prevEventListener = elementEventListenerMap.get(eventType);
+
+  if (prevEventListener) $el.removeEventListener(eventType, prevEventListener);
+  if (eventListener) $el.addEventListener(eventType, eventListener);
+
+  elementEventListenerMap.set(eventType, eventListener);
+  eventListenerMap.set($el, elementEventListenerMap);
+}
+
 function setAttribute($el, [attr, value]) {
   if (attr == "onClick") {
-    $el.addEventListener("click", value);
+    setEventListener($el, "click", value);
   } else if (attr === "onChange") {
-    $el.addEventListener("input", value);
+    setEventListener($el, "input", value);
   } else {
     $el.setAttribute(attr, value);
   }
+}
+
+function updateProps($el, newProps, oldProps) {
+  Object.entries(newProps || {})
+    .filter(([attr, value]) => value && (!oldProps || oldProps[attr] != value))
+    .forEach(([attr, value]) => setAttribute($el, [attr, value]));
 }
 
 export function createElement(node) {
@@ -52,6 +71,7 @@ export function updateElement($parent, newNode, oldNode, index = 0) {
   } else if (changed(newNode, oldNode)) {
     $parent.replaceChild(createElement(newNode), $parent.childNodes[index]);
   } else if (newNode.type) {
+    updateProps($parent.childNodes[index], newNode.props, oldNode?.props);
     const newLength = newNode.children.length;
     const oldLength = oldNode.children.length;
     for (let i = 0; i < newLength || i < oldLength; i++) {

@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "@babel/env"
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-react-jsx",
+    [
+      "module-resolver",
+      {
+        "alias": {
+			    "react": "./src/React/index.js"
+        }
+      }
+    ]
+  ]
+}

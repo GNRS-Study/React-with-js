@@ -53,14 +53,26 @@ props로 받아 온 값을 state에 동기화시키는 용도로 사용하며, �
 ```javascript
 // Class
 class Example extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { count: 0 };
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.value !== prevState.value) {
+      return { value: nextProps.value }
+    }
+    return null
+  }
 }
-
 // Hooks
-const Example = () => {
-    const [count,setCount] = useState(0);
+// 렌더링 중에 state를 바로 업데이트
+function ScrollView({row}) {
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [prevRow, setPrevRow] = useState(null);
+
+  if (row !== prevRow) {
+    // 마지막 렌더링 이후 행이 변경되었습니다. isScrollingDown을 업데이트합니다.
+    setIsScrollingDown(prevRow !== null && row > prevRow);
+    setPrevRow(row);
+  }
+
+  return `Scrolling down: ${isScrollingDown}`;
 }
 ```
 
@@ -77,6 +89,7 @@ class Example extends React.Component {
 }
 
 // Hooks
+// prop은 memo, state는 usememo 활용하면 성능 개선
 const Example = React.memo(() => {
       ...
   },
@@ -186,7 +199,9 @@ class Example extends React.Component {
 // Hooks
 const Example = () => {
     useEffect(() => {
+    //console.log(mount)
         return () => {
+            //console.log(unmount)
             ...
         }
     }, []);
@@ -216,7 +231,10 @@ beforeunload / unload
 
 DOMContentLoaded
 
-onload 이벤트보다 먼저 발생합니다. 즉, DOM tree가 완성되면 바로 발생하므로 빠른 실행 속도가 필요할 때 적합합니다. 다음은 DOMContentLoaded를 이벤트를 다루는 방법들입니다.
+onload 이벤트보다 먼저 발생합니다. 즉, DOM tree가 완성되면 바로 발생하므로 빠른 실행 속도가 필요할 때 적합합니다. 
+브라우저가 HTML을 전부 읽고 DOM 트리를 완성하는 즉시 발생. 이미지 파일(<img>)이나 스타일시트 등의 기타 자원은 기다리지 않는다
+
+다음은 DOMContentLoaded를 이벤트를 다루는 방법들입니다.
 
 ```javascript
 window.addEventListener('DOMContentLoaded', function(){ 
@@ -232,7 +250,7 @@ $(document).ready(function(){
 
 load
 
-문서의 모든 콘텐츠가 로드된 후 발생하는 이벤트입니다. 이로 인해 불필요한 로딩 시간이 추가될 수 있습니다. 동일한 문서에는 오직 onload는 하나만 존재해야 합니다.
+HTML로 DOM 트리를 완성한 후 문서의 모든 콘텐츠가 로드된 후 발생하는 이벤트입니다. 이로 인해 불필요한 로딩 시간이 추가될 수 있습니다. 동일한 문서에는 오직 onload는 하나만 존재해야 합니다.
 
 --> settimeout, useEffect와 비슷한가? 로드된 후라 다른가?
 

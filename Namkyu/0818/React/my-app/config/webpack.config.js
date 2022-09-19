@@ -253,6 +253,7 @@ module.exports = function (webpackEnv) {
     },
 
     //* 번들링시 최적화
+    // * 웹팩에는 어플리케이션의 초기 번들 크기는 244kb이하로 해야된다는 제한이 있슴
     optimization: {
       minimize: isEnvProduction,
       minimizer: [

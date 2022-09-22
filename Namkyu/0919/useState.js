@@ -62,7 +62,7 @@ function useState(initState) {
 }
 
 // * (2) 변경된 값이 없을경우 (debounce 사용)
-
+// ! https://www.zerocho.com/category/JavaScript/post/59a8e9cb15ac0000182794fa
 let count = 0;
 const debounceFrame = callback => {
   let nextFrameCallback = -1;

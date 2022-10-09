@@ -236,6 +236,8 @@ onload 이벤트보다 먼저 발생합니다. 즉, DOM tree가 완성되면 바
 
 다음은 DOMContentLoaded를 이벤트를 다루는 방법들입니다.
 
+clone [https://github.com/MilanSteman/Todo-Lifecycle-Vanillajs/blob/main/public/js/app.js]!
+
 ```javascript
 window.addEventListener('DOMContentLoaded', function(){ 
     //실행될 코드 

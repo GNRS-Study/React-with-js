@@ -28,6 +28,8 @@ function render(newVdom, container) {
     container.appendChild(renderElement(newVdom));
 }
 
+// React.createElement => createElement
+// type : tag, props : dom의 인자, children : 하위 돔들의 배열
 function createElement(type, props = {}, ...children) {
     // type이 funtion인 경우 예외 처리
     if (typeof type === "function") {
